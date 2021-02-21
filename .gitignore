@@ -1,1 +1,6 @@
 /target
+/test
+/tmp
+.DS_Store
+.vscode
+.tmp
