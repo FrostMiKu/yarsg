@@ -11,6 +11,7 @@ regex = "1.4.3"
 pulldown-cmark = "0.8.0"
 log = { version = "0.4.14", features = ["max_level_debug", "release_max_level_warn"] }
 env_logger = "0.8.3"
+chrono = "0.4.19"
 
 [profile.release]
 panic = 'abort'
