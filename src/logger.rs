@@ -1,6 +1,6 @@
+pub use log::LevelFilter;
 use std::io::Write;
 use chrono::Local;
-use log::LevelFilter;
 use env_logger::{Builder, Target, fmt::Color};
 
 pub fn init() {
