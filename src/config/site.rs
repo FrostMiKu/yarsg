@@ -55,7 +55,7 @@ impl SiteConfig {
             owner: "username".to_string(),
             source_dir: "/absolute/path/post".to_string(),
             output_dir: "/absolute/path/build".to_string(),
-            theme: "Whisper".to_string(),
+            theme: "Default".to_string(),
         }
     }
 }
