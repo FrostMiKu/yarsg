@@ -31,7 +31,7 @@ pub fn build_cli() -> App<'static, 'static> {
                     .help("Name of the site. Will create a new directory with that name in the current directory"),
             ),
         SubCommand::with_name("build")
-            .about("build site")
+            .about("Build site")
             .args(&[
                 Arg::with_name("name")
                     .default_value("yars")
