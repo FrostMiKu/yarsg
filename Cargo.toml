@@ -9,13 +9,14 @@ edition = "2018"
 [dependencies]
 regex = "1.4.3"
 clap = "2.33.3"
-pulldown-cmark = "0.8.0"
 log = { version = "0.4.14", features = ["max_level_debug", "release_max_level_warn"] }
 env_logger = "0.8.3"
 chrono = "0.4.19"
 toml = "0.5.8"
 serde = "1"
 serde_derive = "1.0.123"
+pulldown-cmark = "0.8.0"
+tera = "1"
 
 [profile.release]
 panic = 'abort'
