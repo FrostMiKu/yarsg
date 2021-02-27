@@ -41,7 +41,7 @@ fn init_site_workspace(root_dir: PathBuf, site_name: &str){
     match fs::create_dir(work_dir.as_path()) {
         Ok(_) => (),
         Err(e) => {
-            error!("Can't init site: {}",e);
+            error!("Can't init site, dir exists: {}", work_dir.display());
             return;
         }
     };

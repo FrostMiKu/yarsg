@@ -792,6 +792,7 @@ dependencies = [
  "chrono",
  "clap",
  "env_logger",
+ "lazy_static",
  "log",
  "pulldown-cmark",
  "regex",
