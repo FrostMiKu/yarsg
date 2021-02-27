@@ -1,4 +1,7 @@
 use clap::{App, AppSettings, Arg, SubCommand, crate_authors, crate_description, crate_version};
+pub use super::config;
+
+pub mod new;
 
 pub fn build_cli() -> App<'static, 'static> {
 
