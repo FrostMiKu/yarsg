@@ -1,38 +1,17 @@
 use serde_derive::{Serialize, Deserialize};
-use crate::config::Config;
-use std::path::Path;
-use std::fs;
-use log::error;
 
+// config.toml
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Site {
+pub struct Config {
     site: SiteConfig,
     features: FeaturesConfig,
 }
 
-impl Config for Site {
-    fn new() -> Site {
-        Site {
-            site: SiteConfig::new(),
-            features: FeaturesConfig::new(),
-        }
-    }
-
-    fn load(path: &Path) -> Site {
-        let config = match fs::read_to_string(path){
-            Ok(s) => s,
-            Err(e) => {
-                error!("The config file load failed!");
-                panic!(e);
-            }
-        };
-
-        match toml::from_str(&config) {
-            Ok(c) => c,
-            Err(e) => {
-                error!("The config file load failed!");
-                panic!(e);
-            }
+impl Default for Config {
+    fn default() -> Config {
+        Config {
+            site: SiteConfig::default(),
+            features: FeaturesConfig::default(),
         }
     }
 }
@@ -47,8 +26,8 @@ struct SiteConfig {
     theme: String,
 }
 
-impl SiteConfig {
-    fn new() -> SiteConfig {
+impl Default for SiteConfig {
+    fn default() -> SiteConfig {
         SiteConfig {
             url: "https://yourname.github.io".to_string(),
             title: "yars".to_string(),
@@ -65,8 +44,8 @@ struct FeaturesConfig {
     katex: bool, // todo
 }
 
-impl FeaturesConfig {
-    fn new() -> FeaturesConfig {
+impl Default for FeaturesConfig {
+    fn default() -> FeaturesConfig {
         FeaturesConfig {
             katex: false,
         }

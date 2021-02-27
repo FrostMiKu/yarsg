@@ -2,7 +2,7 @@ use log::{info,error};
 use pulldown_cmark::{html, Options, Parser};
 use std::{env, fs, path::PathBuf};
 use yarsg::{cli::{self, build_cli}, logger};
-use yarsg::config::{self, Config};
+use yarsg::config;
 
 fn main() {
     logger::init();

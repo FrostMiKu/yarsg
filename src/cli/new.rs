@@ -1,5 +1,5 @@
 use std::{fs, path::PathBuf};
-use super::config::{self, Config};
+use super::config;
 use log::{info, error};
 
 pub fn init_site_workspace(root_dir: &PathBuf, site_name: &str){
@@ -20,7 +20,7 @@ pub fn init_site_workspace(root_dir: &PathBuf, site_name: &str){
     };
     fs::create_dir(work_dir.join("themes").as_path()).unwrap();
 
-    let site_config: config::site::Site = Config::new();
-    site_config.save(&work_dir.join("config.toml"));
+    let site_config = config::site::Config::default();
+    config::save(&site_config, &work_dir.join("config.toml"));
     info!("...Done.");
 }
