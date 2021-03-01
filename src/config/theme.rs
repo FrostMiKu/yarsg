@@ -22,3 +22,9 @@ struct Author {
     author: String,
     homepage: String,
 }
+
+// settings.toml
+#[derive(Serialize, Deserialize)]
+struct Settings {
+
+}
