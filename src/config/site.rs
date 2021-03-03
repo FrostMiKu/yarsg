@@ -14,6 +14,16 @@ impl Default for Config {
             features: FeaturesConfig::default(),
         }
     }
+
+    fn parse(s: &str) -> Config {
+        match toml::from_str(s) {
+            Ok(c) => c,
+            Err(e) => {
+                error!("The config file load failed!");
+                panic!(e);
+            }
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug)]
