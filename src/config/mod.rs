@@ -1,40 +1,21 @@
-use std::{fs, path::Path};
-use super::utils;
+use std::path::Path;
+use crate::utils;
 use std::result::Result::Err;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use log::error;
+use crate::errors::Result;
 
 pub mod site;
 pub mod theme;
 
-// need refactor
-
-pub fn save<T: Serialize>(config: &T, path: &Path) {
+pub fn save<T: Serialize>(config: &T, path: &Path) -> Result<()>{
     let s = match toml::to_string(config) {
         Ok(s) => s,
         Err(e) => {
-            error!("The config file save failed!");
-            panic!(e);
+            error!("Convert the config to string failed!");
+            return Err(e.into());
         }
     };
-    utils::write_to_file(&s, path).unwrap();
+    utils::write_to_file(&s, path)?;
+    return Ok(());
 }
-
-// pub fn load<'a, T>(path: &Path) -> T
-//     where T: Deserialize<'a> {
-//     let s = match fs::read_to_string(path){
-//         Ok(s) => s,
-//         Err(e) => {
-//             error!("The config file load failed!");
-//             panic!(e);
-//         }
-//     };
-
-//     match toml::from_str(&s) {
-//         Ok(c) => c,
-//         Err(e) => {
-//             error!("The config file load failed!");
-//             panic!(e);
-//         }
-//     }
-// }

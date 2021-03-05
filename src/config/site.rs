@@ -1,4 +1,7 @@
+use std::path::Path;
+use log::error;
 use serde_derive::{Serialize, Deserialize};
+use crate::errors::Result;
 
 // config.toml
 #[derive(Serialize, Deserialize, Debug)]
@@ -14,15 +17,26 @@ impl Default for Config {
             features: FeaturesConfig::default(),
         }
     }
+}
 
-    fn parse(s: &str) -> Config {
+impl Config {
+    fn parse(s: &str) -> Result<Self> {
         match toml::from_str(s) {
-            Ok(c) => c,
+            Ok(c) => Ok(c),
             Err(e) => {
-                error!("The config file load failed!");
-                panic!(e);
+                error!("The config parse failed!");
+                Err(e.into())
             }
         }
+    }
+
+    pub fn from_file(path: &Path) -> Result<Self>{
+        let file_name = path.file_name().unwrap();
+        let s = crate::utils::read_file_or_error(
+            path,
+    format!("No `{:?}` file found. Are you in the right directory?", file_name)
+        )?;
+        Self::parse(&s)
     }
 }
 
@@ -51,13 +65,13 @@ impl Default for SiteConfig {
 
 #[derive(Serialize, Deserialize, Debug)]
 struct FeaturesConfig {
-    katex: bool, // todo
+    rss: bool, // todo
 }
 
 impl Default for FeaturesConfig {
     fn default() -> FeaturesConfig {
         FeaturesConfig {
-            katex: false,
+            rss: false,
         }
     }
 }

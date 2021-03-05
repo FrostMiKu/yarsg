@@ -1,26 +1,30 @@
 use std::{fs, path::PathBuf};
 use super::config;
-use log::{info, error};
+use log::info;
+use crate::errors::{Error, Result};
 
-pub fn init_site_workspace(root_dir: &PathBuf, site_name: &str){
-    let work_dir = match root_dir.join(site_name).canonicalize() {
-        Ok(p) => p,
-        Err(e) => {
-            error!("Can't init site: {}", e);
-            return;
-        }
-    };
+pub fn init_site_workspace(root_dir: &PathBuf, site_name: &str) -> Result<()>{
 
-    match fs::create_dir(work_dir.as_path()) {
-        Ok(_) => (),
-        Err(_) => {
-            error!("Can't init site, dir exists: {}", work_dir.display());
-            return;
-        }
-    };
-    fs::create_dir(work_dir.join("themes").as_path()).unwrap();
+    let work_dir = root_dir.join(site_name);
+
+    if let Err(_) = fs::create_dir(work_dir.as_path()) {
+        return Err(Error::new(
+        format!("Can't init site, dir exists: {}", work_dir.display())
+        ));
+    }
+
 
     let site_config = config::site::Config::default();
-    config::save(&site_config, &work_dir.join("config.toml"));
+    if let Err(e) = config::save(&site_config, &work_dir.join("config.toml")) {
+
+        // init failed! clean dir...
+        fs::remove_dir_all(work_dir.as_path()).unwrap();
+        return Err(e);
+    }
+
+    // we can sure that never panic
+    fs::create_dir(work_dir.join("themes").as_path()).unwrap();
+    
     info!("...Done.");
+    Ok(())
 }

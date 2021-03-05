@@ -1,8 +1,6 @@
-use log::{info,error};
-use pulldown_cmark::{html, Options, Parser};
-use std::{env, fs, path::PathBuf};
+use log::{error, info};
+use std::{env, path::PathBuf};
 use yarsg::{cli::{self, build_cli}, logger};
-use yarsg::config;
 
 fn main() {
     logger::init();
@@ -19,13 +17,17 @@ fn main() {
 
     match matches.subcommand() {
         ("new", Some(matches)) => {
-            cli::new::init_site_workspace(&root_dir, matches.value_of("name").unwrap());
+            if let Err(e) = cli::new::init_site_workspace(
+                &root_dir, 
+       matches.value_of("name").unwrap()
+            ) {
+                error!("{}",e);
+            }
         }
         ("build", Some(_matches)) => {
 
         }
         _ => unreachable!(),
     }
-
 }
 

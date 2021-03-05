@@ -6,7 +6,8 @@ pub enum ErrorKind {
     Yarsg(String),
     Tera(tera::Error),
     Io(::std::io::Error),
-    Toml(toml::de::Error),
+    TomlDe(toml::de::Error),
+    TomlSer(toml::ser::Error),
 }
 
 #[derive(Debug)]
@@ -34,7 +35,8 @@ impl fmt::Display for Error {
             ErrorKind::Yarsg(ref message) => write!(f, "{}", message),
             ErrorKind::Tera(ref e) => write!(f, "{}", e),
             ErrorKind::Io(ref e) => write!(f, "{}", e),
-            ErrorKind::Toml(ref e) => write!(f, "{}", e),
+            ErrorKind::TomlDe(ref e) => write!(f, "{}", e),
+            ErrorKind::TomlSer(ref e) => write!(f, "{}", e),
         }
     }
 }
@@ -60,7 +62,12 @@ impl From<String> for Error {
 }
 impl From<toml::de::Error> for Error {
     fn from(e: toml::de::Error) -> Self {
-        Self { kind: ErrorKind::Toml(e), source: None }
+        Self { kind: ErrorKind::TomlDe(e), source: None }
+    }
+}
+impl From<toml::ser::Error> for Error {
+    fn from(e: toml::ser::Error) -> Self {
+        Self { kind: ErrorKind::TomlSer(e), source: None }
     }
 }
 impl From<tera::Error> for Error {
