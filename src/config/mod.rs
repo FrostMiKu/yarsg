@@ -7,6 +7,7 @@ use crate::errors::Result;
 
 pub mod site;
 pub mod theme;
+pub mod metadata;
 
 pub fn save<T: Serialize>(config: &T, path: &Path) -> Result<()>{
     let s = match toml::to_string(config) {

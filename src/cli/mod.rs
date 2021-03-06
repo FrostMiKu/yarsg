@@ -2,6 +2,7 @@ use clap::{App, AppSettings, Arg, SubCommand, crate_authors, crate_description, 
 pub use super::config;
 
 pub mod new;
+pub mod build;
 
 pub fn build_cli() -> App<'static, 'static> {
 
@@ -38,7 +39,7 @@ pub fn build_cli() -> App<'static, 'static> {
             .args(&[
                 Arg::with_name("name")
                     .default_value("yars")
-                    .help("build site"),
+                    .help("Name of the site."),
             ]),
     ])
 }
