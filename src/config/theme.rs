@@ -4,6 +4,13 @@ use toml::value::Array;
 use crate::errors::Result;
 use log::error;
 
+// themes
+//   └─ThemeName
+//       ├─assets
+//       ├─layouts
+//       ├─theme.toml
+//       └─settings.toml
+
 // theme.toml
 #[derive(Serialize, Deserialize)]
 struct Theme {

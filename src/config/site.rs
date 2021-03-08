@@ -6,6 +6,8 @@ use crate::errors::Result;
 // config.toml
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
+    // the version of the config file
+    version: String,
     site: SiteConfig,
     features: FeaturesConfig,
 }
@@ -13,6 +15,7 @@ pub struct Config {
 impl Default for Config {
     fn default() -> Config {
         Config {
+            version: "0.1".to_string(),
             site: SiteConfig::default(),
             features: FeaturesConfig::default(),
         }

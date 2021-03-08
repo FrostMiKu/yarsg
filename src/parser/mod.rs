@@ -1,4 +1,4 @@
-pub mod post;
+pub mod content;
 
 // let file = fs::read_to_string("tmp/in.md");
 // let markdown_input = file.expect("oops!");

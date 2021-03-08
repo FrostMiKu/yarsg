@@ -1,15 +1,22 @@
+use std::str::FromStr;
+
+use chrono::Local;
 use log::error;
 use serde_derive::{Deserialize, Serialize};
 use toml::value::{Array, Datetime};
 use crate::errors::Result;
 
-// metadata of post
+// metadata of content
 #[derive(Deserialize, Serialize)]
 pub struct Metadata {
+    // must be set
     id: Option<u64>,
-    // theme file, default:post
+    // template file. content will be skipped if it is 'None'
     r#type: Option<String>,
-    // default: the value of the keyword 'owner' in the config.toml
+    // if it is 'None' here, it will be set to the filename
+    title: Option<String>,
+    // if it is 'None' here, it will be set to 
+    // the value of the keyword 'owner' in the config.toml
     authors: Option<Array>,
     tags: Option<Array>,
     // default: now
@@ -19,13 +26,20 @@ pub struct Metadata {
 
 impl Metadata {
     pub fn parse(s: &str) -> Result<Self> {
-        match toml::from_str(s) {
-            Ok(c) => Ok(c),
+        let mut c: Self = match toml::from_str(s) {
+            Ok(c) => c,
             Err(e) => {
                 error!("The metadata parse failed!");
-                Err(e.into())
+                return Err(e.into());
             }
+        };
+
+        // default value of the create_date
+        if let None = c.create_date {
+            let time = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
+            c.create_date = Some(Datetime::from_str(&time).unwrap());
         }
+        Ok(c)
     }
 }
 
@@ -49,5 +63,7 @@ mod tests {
 
         let author = &metadata.authors.unwrap()[0];
         assert_eq!(author.as_str().unwrap(), "lethon");
+
+        println!("{}", metadata.create_date.unwrap());
     }
 }
