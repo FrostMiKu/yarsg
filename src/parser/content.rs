@@ -29,6 +29,10 @@ impl Content {
             markdown: caps.get(2).unwrap().as_str().to_string(),
         };
 
+        if content.metadata.id.is_none() {
+            return Err(Error::new("miss metadata 'id', consider run 'yarsg fix' to fix it."));
+        }
+
         Ok(content)
     }
 }

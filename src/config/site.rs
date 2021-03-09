@@ -3,10 +3,10 @@ use log::error;
 use serde_derive::{Serialize, Deserialize};
 use crate::errors::Result;
 
-// config.toml
+/// config.toml
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
-    // the version of the config file
+    /// The version of the config file.
     version: String,
     site: SiteConfig,
     features: FeaturesConfig,

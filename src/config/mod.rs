@@ -9,6 +9,7 @@ pub mod site;
 pub mod theme;
 pub mod metadata;
 
+/// Serialize struct to file.
 pub fn save<T: Serialize>(config: &T, path: &Path) -> Result<()>{
     let s = match toml::to_string(config) {
         Ok(s) => s,

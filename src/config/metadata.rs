@@ -6,22 +6,22 @@ use serde_derive::{Deserialize, Serialize};
 use toml::value::{Array, Datetime};
 use crate::errors::Result;
 
-// metadata of content
+/// Metadata of the content.
 #[derive(Deserialize, Serialize)]
 pub struct Metadata {
-    // must be set
-    id: Option<u64>,
-    // template file. content will be skipped if it is 'None'
-    r#type: Option<String>,
-    // if it is 'None' here, it will be set to the filename
-    title: Option<String>,
-    // if it is 'None' here, it will be set to 
-    // the value of the keyword 'owner' in the config.toml
-    authors: Option<Array>,
-    tags: Option<Array>,
-    // default: now
-    create_date: Option<Datetime>,
-    modify_date: Option<Datetime>,
+    /// Must be set.
+    pub id: Option<u64>,
+    /// Template filename. content will be skipped if it is 'None'.
+    pub r#type: Option<String>,
+    /// If it is 'None', it will be set to the filename.
+    pub title: Option<String>,
+    /// If it is 'None', it will be set to 
+    /// the value of the keyword 'owner' in the config.toml.
+    pub authors: Option<Array>,
+    pub tags: Option<Array>,
+    /// Default: now.
+    pub create_date: Option<Datetime>,
+    pub modify_date: Option<Datetime>,
 }
 
 impl Metadata {

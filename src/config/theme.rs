@@ -8,10 +8,10 @@ use log::error;
 //   └─ThemeName
 //       ├─assets
 //       ├─layouts
-//       ├─theme.toml
+//      ├─theme.toml
 //       └─settings.toml
 
-// theme.toml
+/// theme.toml
 #[derive(Serialize, Deserialize)]
 struct Theme {
     name: String,
@@ -50,7 +50,7 @@ struct Author {
     homepage: String,
 }
 
-// settings.toml
+/// settings.toml
 #[derive(Serialize, Deserialize)]
 struct Settings {
 
